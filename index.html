@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Spot Training">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       REPLACE THE URL BELOW WITH YOUR ACTUAL MS FORMS RESPONDER LINK
+       ═══════════════════════════════════════════════════════════════ -->
+  <meta http-equiv="refresh" content="1;url=https://forms.office.com/r/S14pKrsUfMh">
+
+  <title>Spot Training Log</title>
+
+  <!-- Inline base64 icon so it works without external files -->
+  <link rel="apple-touch-icon" href="RV_TrainingLog_Icon.png">
+  <link rel="icon" type="image/png" href="RV_TrainingLog_Icon.png">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --rv-red: #8B0000;
+      --rv-dark: #500000;
+      --rv-cream: #F5EBD2;
+      --rv-gold: #C49E50;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: var(--rv-dark);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 40px 24px;
+      background: linear-gradient(160deg, #6B0000 0%, #3A0000 100%);
+    }
+
+    /* Gold top accent line */
+    .container::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--rv-gold);
+    }
+
+    .logo-wrap {
+      width: 120px;
+      height: 120px;
+      border-radius: 28px;
+      background: var(--rv-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 32px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      border: 2px solid var(--rv-gold);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+      50% { transform: scale(1.04); box-shadow: 0 12px 40px rgba(196,158,80,0.3); }
+    }
+
+    .clipboard {
+      width: 60px;
+      height: 72px;
+      background: var(--rv-cream);
+      border-radius: 6px;
+      position: relative;
+      border: 2px solid var(--rv-gold);
+    }
+
+    .clipboard::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 28px;
+      height: 18px;
+      background: var(--rv-gold);
+      border-radius: 4px;
+    }
+
+    .clipboard::after {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 10px;
+      background: var(--rv-dark);
+      border-radius: 3px;
+    }
+
+    .clip-lines {
+      padding: 14px 10px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .clip-line {
+      height: 3px;
+      background: rgba(139,0,0,0.3);
+      border-radius: 2px;
+    }
+
+    .clip-line:first-child {
+      background: var(--rv-red);
+      width: 70%;
+    }
+
+    .title-block {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .tag-line {
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--rv-gold);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--rv-cream);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    h1 span {
+      color: var(--rv-gold);
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: rgba(245, 235, 210, 0.6);
+      letter-spacing: 0.5px;
+    }
+
+    /* Redirect status */
+    .status {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .spinner-wrap {
+      position: relative;
+      width: 48px;
+      height: 48px;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(196,158,80,0.2);
+      border-top-color: var(--rv-gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .status-text {
+      font-size: 14px;
+      color: rgba(245, 235, 210, 0.7);
+      letter-spacing: 0.5px;
+    }
+
+    .manual-link {
+      margin-top: 32px;
+      padding: 14px 32px;
+      background: var(--rv-red);
+      border: 1.5px solid var(--rv-gold);
+      border-radius: 12px;
+      color: var(--rv-cream);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+
+    .manual-link:active {
+      transform: scale(0.97);
+      background: #6B0000;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 24px;
+      font-size: 11px;
+      color: rgba(196,158,80,0.5);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="logo-wrap">
+      <div class="clipboard">
+        <div class="clip-lines">
+          <div class="clip-line"></div>
+          <div class="clip-line"></div>
+          <div class="clip-line"></div>
+          <div class="clip-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="title-block">
+      <div class="tag-line">River Valley Foods</div>
+      <h1>Spot <span>Training</span><br>Log</h1>
+      <div class="subtitle">Loading your form...</div>
+    </div>
+
+    <div class="status">
+      <div class="spinner-wrap">
+        <div class="spinner"></div>
+      </div>
+      <div class="status-text">Redirecting automatically...</div>
+    </div>
+
+    <!-- Fallback button if redirect doesn't fire -->
+    <a class="manual-link" href="https://forms.office.com/r/S14pKrsUfMh">
+      Open Form →
+    </a>
+
+    <div class="footer">Only the Best!</div>
+
+  </div>
+
+  <script>
+    // Redirect after 1 second — gives the page time to render
+    // so the icon is cached by iOS for the home screen shortcut
+    setTimeout(function() {
+      window.location.replace("https://forms.office.com/r/S14pKrsUfMh");
+    }, 1200);
+  </script>
+
+</body>
+</html>
