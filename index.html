@@ -11,8 +11,6 @@
   <!-- ═══════════════════════════════════════════════════════════════
        REPLACE THE URL BELOW WITH YOUR ACTUAL MS FORMS RESPONDER LINK
        ═══════════════════════════════════════════════════════════════ -->
-  <meta http-equiv="refresh" content="3;url=https://forms.office.com/r/S14pKrsUfMh">
-
   <title>Spot Training Log</title>
 
   <!-- Inline base64 icon so it works without external files -->
@@ -200,19 +198,20 @@
     }
 
     .manual-link {
-      margin-top: 32px;
-      padding: 14px 32px;
+      margin-top: 48px;
+      padding: 20px 48px;
       background: var(--rv-red);
-      border: 1.5px solid var(--rv-gold);
-      border-radius: 12px;
+      border: 2px solid var(--rv-gold);
+      border-radius: 16px;
       color: var(--rv-cream);
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 700;
       letter-spacing: 0.5px;
       text-decoration: none;
       display: inline-block;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+      text-align: center;
     }
 
     .manual-link:active {
@@ -247,32 +246,19 @@
     <div class="title-block">
       <div class="tag-line">River Valley Foods</div>
       <h1>Spot <span>Training</span><br>Log</h1>
-      <div class="subtitle">Loading your form...</div>
+      <div class="subtitle">Tap below to log a training session</div>
     </div>
 
-    <div class="status">
-      <div class="spinner-wrap">
-        <div class="spinner"></div>
-      </div>
-      <div class="status-text">Redirecting automatically...</div>
-    </div>
-
-    <!-- Fallback button if redirect doesn't fire -->
+    
     <a class="manual-link" href="https://forms.office.com/r/S14pKrsUfMh">
-      Open Form →
+      📋 &nbsp;Start Spot Training Log
     </a>
 
     <div class="footer">Only the Best!</div>
 
   </div>
 
-  <script>
-    // Redirect after 1 second — gives the page time to render
-    // so the icon is cached by iOS for the home screen shortcut
-    setTimeout(function() {
-      window.location.replace("https://forms.office.com/r/S14pKrsUfMh");
-    }, 3000);
-  </script>
+  
 
 </body>
 </html>
