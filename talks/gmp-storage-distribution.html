@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a1a2e">
+  <title>GMPs for Storage & Distribution - Toolbox Talk</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --text: #e8e8f0;
+      --text-muted: #8888a0;
+      --radius: 14px;
+    }
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body { padding: 16px; max-width: 600px; margin: 0 auto; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--text-muted); text-decoration: none; font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .badge {
+      display: inline-block; padding: 4px 12px; border-radius: 20px;
+      font-size: 12px; font-weight: 700; color: #fff;
+    }
+    .badge-gmp { background: #27ae60; }
+
+    h1 { font-size: 22px; font-weight: 800; margin: 12px 0 4px; }
+    .time { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; }
+
+    .points {
+      padding-left: 22px;
+      margin-bottom: 16px;
+    }
+    .points li {
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #d0d0e0;
+    }
+    .points li strong { color: var(--text); }
+
+    .question {
+      background: rgba(243,156,18,0.1);
+      border-left: 4px solid #f39c12;
+      padding: 14px 16px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #e8e8f0;
+      margin: 16px 0;
+    }
+    .question::before {
+      content: "💬 Discussion Question";
+      display: block;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #f39c12;
+      margin-bottom: 6px;
+    }
+
+    .log-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: #27ae60;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      margin-top: 20px;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.12s ease;
+    }
+    .log-btn:active { transform: scale(0.97); }
+
+    .shuffle-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: center;
+      margin-top: 10px;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <a class="back-link" href="index.html">&larr; Back to Topics</a>
+
+  <div class="card">
+    <span class="badge badge-gmp">📋 GMP</span>
+    <h1>GMPs for Storage & Distribution</h1>
+    <p class="time">⏱ Est. 3 minutes</p>
+
+    <ol class="points">
+      <li><strong>Wash your hands before entering the warehouse.</strong> Every time — beginning of shift, after breaks, after using the restroom, after eating or drinking. This is our first line of defense even in a low-risk storage environment.</li>
+      <li><strong>Do not come to work sick.</strong> If you have vomiting, diarrhea, jaundice, or a sore throat with fever, you must report it to your supervisor before starting work. This isn't optional — it's an SQF requirement and it protects the product and your coworkers.</li>
+      <li><strong>Use FEFO for stock rotation.</strong> First Expired, First Out. When pulling or staging product, always check date codes and move the earliest expiration to the front. Don't just grab what's closest — check the dates.</li>
+      <li><strong>Know how to handle allergen spills.</strong> If product containing allergens spills in the warehouse: do NOT clean it up yourself if you are allergic to that product. Notify your supervisor immediately. The area must be inspected and cleared before anyone resumes work in that zone. This protects both you and the product around the spill.</li>
+      <li><strong>Keep personal items out of storage areas.</strong> Food, drinks, medicine, and personal belongings stay in the break room or lockers. Nothing unauthorized goes into the warehouse — no exceptions.</li>
+    </ol>
+
+    <div class="question">
+      When was the last time you checked a date code before pulling product? What would happen downstream if we shipped something past its expiration?
+    </div>
+
+    <a class="log-btn" href="YOUR_TOOLBOX_FORM_URL?topic=GMPs%20for%20Storage%20%26%20Distribution">
+      ✅ Deliver & Log This Talk
+    </a>
+
+    <button class="shuffle-btn" onclick="window.location.href='index.html#random'">
+      🎲 Shuffle — Pick Another Topic
+    </button>
+  </div>
+
+</body>
+</html>

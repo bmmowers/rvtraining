@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a1a2e">
+  <title>Slip, Trip & Fall Prevention - Toolbox Talk</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --text: #e8e8f0;
+      --text-muted: #8888a0;
+      --radius: 14px;
+    }
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body { padding: 16px; max-width: 600px; margin: 0 auto; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--text-muted); text-decoration: none; font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .badge {
+      display: inline-block; padding: 4px 12px; border-radius: 20px;
+      font-size: 12px; font-weight: 700; color: #fff;
+    }
+    .badge-safety { background: #e74c3c; }
+    .badge-gmp { background: #27ae60; }
+    .badge-quality { background: #3498db; }
+    .badge-equipment { background: #95a5a6; }
+    .badge-allergens { background: #e67e22; }
+    .badge-hr { background: #9b59b6; }
+
+    h1 { font-size: 22px; font-weight: 800; margin: 12px 0 4px; }
+    .time { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; }
+
+    .points {
+      padding-left: 22px;
+      margin-bottom: 16px;
+    }
+    .points li {
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #d0d0e0;
+    }
+    .points li strong { color: var(--text); }
+
+    .question {
+      background: rgba(243,156,18,0.1);
+      border-left: 4px solid #f39c12;
+      padding: 14px 16px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #e8e8f0;
+      margin: 16px 0;
+    }
+    .question::before {
+      content: "💬 Discussion Question";
+      display: block;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #f39c12;
+      margin-bottom: 6px;
+    }
+
+    .log-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: #27ae60;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      margin-top: 20px;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.12s ease;
+    }
+    .log-btn:active { transform: scale(0.97); }
+
+    .shuffle-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: center;
+      margin-top: 10px;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <a class="back-link" href="index.html">&larr; Back to Topics</a>
+
+  <div class="card">
+    <span class="badge badge-safety">🛡 Safety</span>
+    <h1>Slip, Trip & Fall Prevention</h1>
+    <p class="time">⏱ Est. 3 minutes</p>
+
+    <ol class="points">
+      <li><strong>Spills = immediate action.</strong> If you see a wet floor, a leaking hose, or product on the ground, stop and clean it up or block it off before anyone walks through. Don't assume someone else will handle it.</li>
+      <li><strong>Watch your path.</strong> Hoses, pallets, shrink wrap, and extension cords are the most common trip hazards on our floor. Walk around them or move them if you can do it safely.</li>
+      <li><strong>Footwear matters.</strong> Non-slip, closed-toe shoes are required for a reason. If your soles are worn smooth, it's time to replace them. Check the bottoms of your shoes today.</li>
+      <li><strong>Slow down at transitions.</strong> Moving between dry and wet areas (like from the warehouse into the cooler or wash area) is where most slips happen. Shorten your stride and watch the floor surface change.</li>
+      <li><strong>Report hazards you can't fix.</strong> Broken floor tiles, missing drain covers, and damaged mats should go to maintenance the same day. Use the Hub's Report an Issue button if needed.</li>
+    </ol>
+
+    <div class="question">
+      What's the most common slip or trip hazard you've seen in your area this week — and what could we do differently to prevent it?
+    </div>
+
+    <!-- 
+      INSTRUCTIONS: Replace YOUR_TOOLBOX_FORM_URL with your actual MS Form link.
+      The ?topic= parameter pre-fills the topic field in the form.
+    -->
+    <a class="log-btn" href="YOUR_TOOLBOX_FORM_URL?topic=Slip%2C%20Trip%20%26%20Fall%20Prevention">
+      ✅ Deliver & Log This Talk
+    </a>
+
+    <button class="shuffle-btn" onclick="window.location.href='index.html#random'">
+      🎲 Shuffle — Pick Another Topic
+    </button>
+  </div>
+
+</body>
+</html>

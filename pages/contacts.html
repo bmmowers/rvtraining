@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a1a2e">
+  <title>Contact / Escalate - Lead Hub</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #0f0f1a; --surface: #1a1a2e; --text: #e8e8f0; --text-muted: #8888a0; --teal: #1abc9c; --red: #e74c3c; --radius: 14px; }
+    html, body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+    body { padding: 16px; max-width: 600px; margin: 0 auto; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); text-decoration: none; font-size: 14px; margin-bottom: 16px; }
+    h1 { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
+    .sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+    .section-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+      color: var(--text-muted); margin: 24px 0 10px; padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .contact-card {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px; background: var(--surface); border-radius: var(--radius);
+      margin-bottom: 10px; text-decoration: none; color: var(--text);
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: transform 0.12s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .contact-card:active { transform: scale(0.98); }
+    .contact-icon { font-size: 22px; flex-shrink: 0; }
+    .contact-info { flex: 1; }
+    .contact-name { font-size: 15px; font-weight: 600; }
+    .contact-role { font-size: 12px; color: var(--text-muted); }
+    .contact-action {
+      padding: 6px 14px; border-radius: 20px; background: var(--teal); color: #fff;
+      font-size: 13px; font-weight: 600; flex-shrink: 0; text-decoration: none;
+    }
+    .emergency-card {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px; background: rgba(231,76,60,0.12); border: 1px solid rgba(231,76,60,0.3);
+      border-radius: var(--radius); margin-bottom: 10px; text-decoration: none; color: var(--text);
+    }
+    .emergency-card .contact-action { background: var(--red); }
+  </style>
+</head>
+<body>
+
+  <a class="back-link" href="../index.html">&larr; Back to Hub</a>
+  <h1>Contact / Escalate</h1>
+  <p class="sub">Tap Call to dial directly. Update numbers as needed.</p>
+
+  <div class="section-label">🚨 Emergency</div>
+  <a class="emergency-card" href="tel:911">
+    <span class="contact-icon">🚑</span>
+    <div class="contact-info">
+      <div class="contact-name">Emergency Services</div>
+      <div class="contact-role">Life-threatening emergency only</div>
+    </div>
+    <span class="contact-action">911</span>
+  </a>
+
+  <div class="section-label">Production & Operations</div>
+
+  <!-- Replace names, roles, and phone numbers with your actual contacts -->
+  <a class="contact-card" href="tel:+15551234567">
+    <span class="contact-icon">👤</span>
+    <div class="contact-info">
+      <div class="contact-name">[Plant Manager Name]</div>
+      <div class="contact-role">Plant Manager</div>
+    </div>
+    <span class="contact-action">Call</span>
+  </a>
+  <a class="contact-card" href="tel:+15551234568">
+    <span class="contact-icon">👤</span>
+    <div class="contact-info">
+      <div class="contact-name">[Production Supervisor Name]</div>
+      <div class="contact-role">Production Supervisor</div>
+    </div>
+    <span class="contact-action">Call</span>
+  </a>
+
+  <div class="section-label">Quality & Food Safety</div>
+  <a class="contact-card" href="tel:+15551234569">
+    <span class="contact-icon">👤</span>
+    <div class="contact-info">
+      <div class="contact-name">[QA Manager Name]</div>
+      <div class="contact-role">QA Manager</div>
+    </div>
+    <span class="contact-action">Call</span>
+  </a>
+
+  <div class="section-label">Maintenance</div>
+  <a class="contact-card" href="tel:+15551234570">
+    <span class="contact-icon">🔧</span>
+    <div class="contact-info">
+      <div class="contact-name">[Maintenance Lead Name]</div>
+      <div class="contact-role">Maintenance Lead</div>
+    </div>
+    <span class="contact-action">Call</span>
+  </a>
+  <a class="contact-card" href="tel:+15551234571">
+    <span class="contact-icon">📻</span>
+    <div class="contact-info">
+      <div class="contact-name">Maintenance Radio</div>
+      <div class="contact-role">Channel [X]</div>
+    </div>
+    <span class="contact-action">Radio</span>
+  </a>
+
+  <div class="section-label">Safety & Compliance</div>
+  <a class="contact-card" href="tel:+15551234572">
+    <span class="contact-icon">👤</span>
+    <div class="contact-info">
+      <div class="contact-name">Brett Mowers</div>
+      <div class="contact-role">Director, Compliance & Training</div>
+    </div>
+    <span class="contact-action">Call</span>
+  </a>
+
+  <div class="section-label">Escalation Path</div>
+  <div class="contact-card" style="cursor: default;">
+    <span class="contact-icon">📋</span>
+    <div class="contact-info">
+      <div class="contact-name" style="font-size: 14px; line-height: 1.5;">
+        1. Try to resolve on the floor<br>
+        2. Contact your shift supervisor<br>
+        3. If no response: contact department manager<br>
+        4. If safety/food safety emergency: contact QA immediately<br>
+        5. If life-threatening: call 911 first, then notify management
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

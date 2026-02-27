@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a1a2e">
+  <title>Good Warehouse Ergonomics - Toolbox Talk</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --text: #e8e8f0;
+      --text-muted: #8888a0;
+      --radius: 14px;
+    }
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body { padding: 16px; max-width: 600px; margin: 0 auto; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--text-muted); text-decoration: none; font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .badge {
+      display: inline-block; padding: 4px 12px; border-radius: 20px;
+      font-size: 12px; font-weight: 700; color: #fff;
+    }
+    .badge-safety { background: #e74c3c; }
+
+    h1 { font-size: 22px; font-weight: 800; margin: 12px 0 4px; }
+    .time { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; }
+
+    .points {
+      padding-left: 22px;
+      margin-bottom: 16px;
+    }
+    .points li {
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #d0d0e0;
+    }
+    .points li strong { color: var(--text); }
+
+    .question {
+      background: rgba(243,156,18,0.1);
+      border-left: 4px solid #f39c12;
+      padding: 14px 16px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #e8e8f0;
+      margin: 16px 0;
+    }
+    .question::before {
+      content: "💬 Discussion Question";
+      display: block;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #f39c12;
+      margin-bottom: 6px;
+    }
+
+    .log-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: #27ae60;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      margin-top: 20px;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.12s ease;
+    }
+    .log-btn:active { transform: scale(0.97); }
+
+    .shuffle-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: center;
+      margin-top: 10px;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <a class="back-link" href="index.html">&larr; Back to Topics</a>
+
+  <div class="card">
+    <span class="badge badge-safety">🛡 Safety</span>
+    <h1>Good Warehouse Ergonomics</h1>
+    <p class="time">⏱ Est. 3 minutes</p>
+
+    <ol class="points">
+      <li><strong>Morning stretches are not optional.</strong> We do them for a reason — cold muscles are injury-prone muscles. Take the full stretch routine seriously every morning, especially shoulders, lower back, hamstrings, and wrists. If you skip it, you're starting the shift at a disadvantage.</li>
+      <li><strong>Bend at the knees, not the waist.</strong> When lifting cases or picking from lower shelves, squat down and drive up with your legs. Keep your back straight and the load close to your body. Your legs are built to lift heavy — your lower back is not.</li>
+      <li><strong>Know your limits on case picking.</strong> If a case is over 50 lbs or awkward to grip, get help or use equipment. When stacking cases on a pallet, work from the center out and keep the heaviest cases on the bottom. Don't twist your torso while holding a load — move your feet to turn your whole body.</li>
+      <li><strong>Use proper technique with pallet jacks.</strong> Push, don't pull whenever possible — it puts less strain on your back and gives you better visibility. When lowering a loaded pallet, control the descent. Jerking or dropping loads is how strains happen.</li>
+      <li><strong>Keep your head on a swivel.</strong> Situational awareness is ergonomics too. Watch for forklifts, other pickers, low-hanging obstacles, and wet floors. Most warehouse injuries aren't from one big lift — they're from being in the wrong spot at the wrong time or rushing through a repetitive task without thinking about form.</li>
+    </ol>
+
+    <div class="question">
+      Be honest — how's your lifting form by the end of a long shift? What's the first thing that starts to slip when you're tired, and how can we watch out for each other?
+    </div>
+
+    <a class="log-btn" href="YOUR_TOOLBOX_FORM_URL?topic=Good%20Warehouse%20Ergonomics">
+      ✅ Deliver & Log This Talk
+    </a>
+
+    <button class="shuffle-btn" onclick="window.location.href='index.html#random'">
+      🎲 Shuffle — Pick Another Topic
+    </button>
+  </div>
+
+</body>
+</html>

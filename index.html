@@ -5,260 +5,307 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Spot Training">
-  <meta name="mobile-web-app-capable" content="yes">
-
-  <!-- ═══════════════════════════════════════════════════════════════
-       REPLACE THE URL BELOW WITH YOUR ACTUAL MS FORMS RESPONDER LINK
-       ═══════════════════════════════════════════════════════════════ -->
-  <title>Spot Training Log</title>
-
-  <!-- Inline base64 icon so it works without external files -->
-  <link rel="apple-touch-icon" href="RV_TrainingLog_Icon.png">
-  <link rel="icon" type="image/png" href="RV_TrainingLog_Icon.png">
-
+  <meta name="theme-color" content="#1a1a2e">
+  <link rel="manifest" href="manifest.json">
+  <title>Lead Hub</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --rv-red: #8B0000;
-      --rv-dark: #500000;
-      --rv-cream: #F5EBD2;
-      --rv-gold: #C49E50;
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --surface-hover: #22223a;
+      --text: #e8e8f0;
+      --text-muted: #8888a0;
+      --green: #2ecc71;
+      --blue: #3498db;
+      --red: #e74c3c;
+      --amber: #f39c12;
+      --purple: #9b59b6;
+      --teal: #1abc9c;
+      --radius: 16px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
 
     html, body {
-      width: 100%;
       height: 100%;
-      background: var(--rv-dark);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      padding: 40px 24px;
-      background: linear-gradient(160deg, #6B0000 0%, #3A0000 100%);
+    body {
+      padding: calc(var(--safe-top) + 12px) 16px calc(var(--safe-bottom) + 16px);
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    /* Gold top accent line */
-    .container::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--rv-gold);
-    }
-
-    .logo-wrap {
-      width: 120px;
-      height: 120px;
-      border-radius: 28px;
-      background: var(--rv-red);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 32px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-      border: 2px solid var(--rv-gold);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
-      50% { transform: scale(1.04); box-shadow: 0 12px 40px rgba(196,158,80,0.3); }
-    }
-
-    .clipboard {
-      width: 60px;
-      height: 72px;
-      background: var(--rv-cream);
-      border-radius: 6px;
-      position: relative;
-      border: 2px solid var(--rv-gold);
-    }
-
-    .clipboard::before {
-      content: '';
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 28px;
-      height: 18px;
-      background: var(--rv-gold);
-      border-radius: 4px;
-    }
-
-    .clipboard::after {
-      content: '';
-      position: absolute;
-      top: -6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 14px;
-      height: 10px;
-      background: var(--rv-dark);
-      border-radius: 3px;
-    }
-
-    .clip-lines {
-      padding: 14px 10px 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
-
-    .clip-line {
-      height: 3px;
-      background: rgba(139,0,0,0.3);
-      border-radius: 2px;
-    }
-
-    .clip-line:first-child {
-      background: var(--rv-red);
-      width: 70%;
-    }
-
-    .title-block {
+    /* ── Header ── */
+    .header {
       text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .tag-line {
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--rv-gold);
-      margin-bottom: 10px;
-      font-weight: 500;
-    }
-
-    h1 {
-      font-size: 32px;
-      font-weight: 800;
-      color: var(--rv-cream);
-      letter-spacing: -0.5px;
-      line-height: 1.1;
+      padding: 20px 0 8px;
       margin-bottom: 8px;
     }
-
-    h1 span {
-      color: var(--rv-gold);
+    .header-logo {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .header-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #e8e8f0 0%, #8888a0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    .header-meta .shift-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-right: 4px;
+      vertical-align: middle;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
     }
 
-    .subtitle {
-      font-size: 14px;
-      color: rgba(245, 235, 210, 0.6);
-      letter-spacing: 0.5px;
+    /* ── Tile Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 12px;
     }
 
-    /* Redirect status */
-    .status {
+    /* ── Tile ── */
+    .tile {
+      position: relative;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .spinner-wrap {
-      position: relative;
-      width: 48px;
-      height: 48px;
-    }
-
-    .spinner {
-      width: 48px;
-      height: 48px;
-      border: 3px solid rgba(196,158,80,0.2);
-      border-top-color: var(--rv-gold);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .status-text {
-      font-size: 14px;
-      color: rgba(245, 235, 210, 0.7);
-      letter-spacing: 0.5px;
-    }
-
-    .manual-link {
-      margin-top: 48px;
-      padding: 20px 48px;
-      background: var(--rv-red);
-      border: 2px solid var(--rv-gold);
-      border-radius: 16px;
-      color: var(--rv-cream);
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+      align-items: flex-start;
+      justify-content: space-between;
+      min-height: 155px;
+      padding: 18px 16px 14px;
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.04);
       text-decoration: none;
-      display: inline-block;
-      transition: all 0.2s ease;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.4);
-      text-align: center;
+      color: var(--text);
+      overflow: hidden;
+      transition: transform 0.15s ease, background 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
+    }
+    .tile:active {
+      transform: scale(0.96);
+      background: var(--surface-hover);
     }
 
-    .manual-link:active {
-      transform: scale(0.97);
-      background: #6B0000;
+    /* Accent bar at top */
+    .tile::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .tile--green::before  { background: var(--green); }
+    .tile--blue::before   { background: var(--blue); }
+    .tile--red::before    { background: var(--red); }
+    .tile--amber::before  { background: var(--amber); }
+    .tile--purple::before { background: var(--purple); }
+    .tile--teal::before   { background: var(--teal); }
+
+    .tile-icon {
+      font-size: 32px;
+      line-height: 1;
+      margin-bottom: 8px;
+      filter: saturate(0.9);
     }
 
-    .footer {
-      position: fixed;
-      bottom: 24px;
+    .tile-label {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.2px;
+    }
+
+    .tile-sub {
       font-size: 11px;
-      color: rgba(196,158,80,0.5);
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.3;
     }
+
+    /* Subtle glow behind icon matching tile color */
+    .tile--green  .tile-icon { text-shadow: 0 0 20px rgba(46,204,113,0.3); }
+    .tile--blue   .tile-icon { text-shadow: 0 0 20px rgba(52,152,219,0.3); }
+    .tile--red    .tile-icon { text-shadow: 0 0 20px rgba(231,76,60,0.3); }
+    .tile--amber  .tile-icon { text-shadow: 0 0 20px rgba(243,156,18,0.3); }
+    .tile--purple .tile-icon { text-shadow: 0 0 20px rgba(155,89,182,0.3); }
+    .tile--teal   .tile-icon { text-shadow: 0 0 20px rgba(26,188,156,0.3); }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      margin-top: 24px;
+      padding: 12px 0;
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ── Tablet landscape: 3 columns ── */
+    @media (min-width: 700px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+      .tile { min-height: 170px; }
+    }
+
+    /* ── Install banner ── */
+    .install-banner {
+      display: none;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-top: 14px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .install-banner strong { color: var(--text); }
   </style>
 </head>
 <body>
-  <div class="container">
 
-    <div class="logo-wrap">
-      <div class="clipboard">
-        <div class="clip-lines">
-          <div class="clip-line"></div>
-          <div class="clip-line"></div>
-          <div class="clip-line"></div>
-          <div class="clip-line"></div>
-        </div>
+  <!-- ── Header ── -->
+  <div class="header">
+    <div class="header-logo">River Valley Foods</div>
+    <div class="header-title">Lead Hub</div>
+    <div class="header-meta">
+      <span class="shift-dot"></span>
+      <span id="currentDate"></span>
+    </div>
+  </div>
+
+  <!-- ── Tile Grid ── -->
+  <div class="grid">
+
+    <!-- 1. Spot Coaching Log -->
+    <a class="tile tile--green" href="https://forms.office.com/r/S14pKrsUfM" id="tileCoaching">
+      <div class="tile-icon">📋</div>
+      <div>
+        <div class="tile-label">Spot Coaching Log</div>
+        <div class="tile-sub">Log a coaching observation</div>
       </div>
-    </div>
-
-    <div class="title-block">
-      <div class="tag-line">River Valley Foods</div>
-      <h1>Spot <span>Training</span><br>Log</h1>
-      <div class="subtitle">Tap below to log a training session</div>
-    </div>
-
-    
-    <a class="manual-link" href="https://forms.office.com/r/S14pKrsUfMh">
-      📋 &nbsp;Start Spot Training Log
     </a>
 
-    <div class="footer">Only the Best!</div>
+    <!-- 2. Pre-Shift Checklist -->
+    <a class="tile tile--blue" href="https://forms.office.com/r/SuUxgdBFKg" id="tileChecklist">
+      <div class="tile-icon">✅</div>
+      <div>
+        <div class="tile-label">Pre-Shift Checklist</div>
+        <div class="tile-sub">Start-of-shift verification</div>
+      </div>
+    </a>
+
+    <!-- 3. Report an Issue (NCR) -->
+    <a class="tile tile--red" href="https://forms.office.com/Pages/ResponsePage.aspx?id=7Sq2pnJSq0ayQBpl3yZHAynbuVhcq-lBng8NR_EF911UQTBTNTAxTFpNV05JODNUNVo3WDVDRE5ONi4u" id="tileNCR">
+      <div class="tile-icon">🚨</div>
+      <div>
+        <div class="tile-label">Report an Issue</div>
+        <div class="tile-sub">NCR / food safety / quality</div>
+      </div>
+    </a>
+
+    <!-- 4. Toolbox Talks -->
+    <a class="tile tile--amber" href="talks/index.html" id="tileTalks">
+      <div class="tile-icon">🎓</div>
+      <div>
+        <div class="tile-label">Toolbox Talks</div>
+        <div class="tile-sub">Pick a topic &amp; deliver</div>
+      </div>
+    </a>
+
+    <!-- 5. SOPs & Quick Refs -->
+    <a class="tile tile--purple" href="pages/sops.html" id="tileSOPs">
+      <div class="tile-icon">📖</div>
+      <div>
+        <div class="tile-label">SOPs &amp; Quick Refs</div>
+        <div class="tile-sub">Key procedures at a glance</div>
+      </div>
+    </a>
+
+    <!-- 6. Contact / Escalate -->
+    <a class="tile tile--teal" href="pages/contacts.html" id="tileContacts">
+      <div class="tile-icon">📞</div>
+      <div>
+        <div class="tile-label">Contact / Escalate</div>
+        <div class="tile-sub">Numbers &amp; escalation path</div>
+      </div>
+    </a>
 
   </div>
 
-  
+  <!-- ── Install Prompt ── -->
+  <div class="install-banner" id="installBanner">
+    <strong>Add to Home Screen</strong> for the full app experience
+  </div>
+
+  <!-- ── Footer ── -->
+  <div class="footer">
+    Floor Lead Hub v1.0 &middot; Internal Use Only
+  </div>
+
+  <script>
+    // ── Date display ──
+    (function() {
+      const d = new Date();
+      const opts = { weekday: 'short', month: 'short', day: 'numeric' };
+      document.getElementById('currentDate').textContent = d.toLocaleDateString('en-US', opts);
+    })();
+
+    // ── PWA Install Prompt ──
+    let deferredPrompt;
+    const banner = document.getElementById('installBanner');
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      banner.style.display = 'block';
+    });
+    banner.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        banner.style.display = 'none';
+      }
+    });
+
+    // ── Service Worker Registration ──
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  </script>
 
 </body>
 </html>

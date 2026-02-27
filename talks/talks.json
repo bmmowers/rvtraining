@@ -1,0 +1,42 @@
+[
+  {
+    "id": "safety-slip-trip-fall",
+    "title": "Slip, Trip & Fall Prevention",
+    "category": "Safety",
+    "tags": ["slip", "trip", "fall", "floor", "housekeeping"],
+    "file": "safety-slip-trip-fall.html",
+    "estimatedMinutes": 3,
+    "dateAdded": "2026-02-25",
+    "lastReviewed": "2026-02-25"
+  },
+  {
+    "id": "gmp-storage-distribution",
+    "title": "GMPs for Storage & Distribution",
+    "category": "GMP",
+    "tags": ["gmp", "handwashing", "FEFO", "allergen", "illness", "SQF"],
+    "file": "gmp-storage-distribution.html",
+    "estimatedMinutes": 3,
+    "dateAdded": "2026-02-28",
+    "lastReviewed": "2026-02-28"
+  },
+  {
+    "id": "safety-food-defense-visitor",
+    "title": "Food Defense & Visitor Policy",
+    "category": "Safety",
+    "tags": ["food defense", "visitor", "badge", "doors", "security", "SQF"],
+    "file": "safety-food-defense-visitor.html",
+    "estimatedMinutes": 3,
+    "dateAdded": "2026-02-28",
+    "lastReviewed": "2026-02-28"
+  },
+  {
+    "id": "safety-warehouse-ergonomics",
+    "title": "Good Warehouse Ergonomics",
+    "category": "Safety",
+    "tags": ["ergonomics", "lifting", "stretching", "pallet jack", "back safety"],
+    "file": "safety-warehouse-ergonomics.html",
+    "estimatedMinutes": 3,
+    "dateAdded": "2026-02-28",
+    "lastReviewed": "2026-02-28"
+  }
+]
