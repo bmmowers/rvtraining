@@ -232,7 +232,7 @@ function render(){
     h+='<div class="form-group"><label>Department</label><select onchange="onDeptChange(this)">';
     DEPARTMENTS.forEach(function(d){h+='<option'+(state.form.department===d?' selected':'')+'>'+d+'</option>'});
     h+='</select></div>';
-    h+='<div class="form-group"><label>Current Role</label><input value="'+esc(state.form.role)+'" oninput="onRoleInput(this)" placeholder="Job title"></div>';
+    h+='<div class="form-group"><label>Current Role</label><input id="frole" value="'+esc(state.form.role)+'" oninput="onRoleInput(this)" placeholder="Job title"></div>';
     h+='</div>';
 
     // Sliders — rendered into a stable container
@@ -253,7 +253,7 @@ function render(){
     h+='</div>';
 
     h+='<div class="form-group" style="margin-top:4px"><label>Manager Notes</label>';
-    h+='<textarea rows="2" oninput="onNotesInput(this)" placeholder="Context, concerns, observations...">'+esc(state.form.notes)+'</textarea></div>';
+    h+='<textarea id="fnotes" rows="2" oninput="onNotesInput(this)" placeholder="Context, concerns, observations...">'+esc(state.form.notes)+'</textarea></div>';
 
     // Live score
     h+='<div class="live-score-bar" id="live-score-zone">';
@@ -355,13 +355,26 @@ function render(){
   }
 
   h+='</div>';
-  document.getElementById('app').innerHTML=h;
-
-  // Focus name field if empty and on form view
-  if(state.view==='form'){
-    var el=document.getElementById('fname');
-    if(el&&!state.form.name)el.focus();
+    // Preserve focus/selection across full re-renders (prevents cursor-jump)
+  var activeId=null, selStart=null, selEnd=null;
+  var active=document.activeElement;
+  if(active && (active.tagName==='INPUT' || active.tagName==='TEXTAREA') && active.id){
+    activeId=active.id;
+    try{ selStart=active.selectionStart; selEnd=active.selectionEnd; }catch(e){}
   }
+document.getElementById('app').innerHTML=h;
+
+  // Restore focus/selection after re-render
+  if(activeId){
+    var restored=document.getElementById(activeId);
+    if(restored && (restored.tagName==='INPUT' || restored.tagName==='TEXTAREA')){
+      restored.focus();
+      if(selStart!==null && selEnd!==null){
+        try{ restored.setSelectionRange(selStart, selEnd); }catch(e){}
+      }
+    }
+  }
+
 }
 
 // ═══════════════════════════════════════
@@ -442,10 +455,8 @@ function exportCSV(){
   toast('CSV exported');
 }
 
-// PWA
-if('serviceWorker' in navigator){navigator.serviceWorker.register('scoring-sw.js').catch(function(){})}
-var deferredPrompt;
-window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e});
+// PWA disabled (service worker can cause stale cached versions on GitHub Pages)
+// If you want offline/PWA later, re-enable with a versioned service worker.
 
 // Init
 if(state.employees.length===0)state.view='form';
