@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1e3a5f">
+<title>RVF Employee Scoring Tool</title>
+<link rel="manifest" href="scoring-manifest.json">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--navy:#1e3a5f;--teal:#2a7f8e;--light:#eaf2f5;--bg:#f4f7f9;
+--red:#dc2626;--orange:#d97706;--blue:#2563eb;--green:#16a34a;
+--gray:#64748b;--lightgray:#94a3b8;--border:#e2e8f0;
+--radius:10px;--shadow:0 1px 4px rgba(0,0,0,0.07);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:#334155;min-height:100vh;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit}
+
+/* Header */
+.header{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;padding:20px 20px 16px}
+.header-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:.65;margin-bottom:2px}
+.header h1{font-size:20px;font-weight:700;letter-spacing:-.3px}
+.header-meta{font-size:11px;opacity:.7;margin-top:3px}
+
+/* Tabs */
+.tabs{background:#fff;border-bottom:1px solid var(--border);display:flex;position:sticky;top:0;z-index:50;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{padding:11px 18px;border:none;background:none;font-size:13px;font-weight:600;color:var(--gray);white-space:nowrap;border-bottom:3px solid transparent;transition:.2s}
+.tab.active{color:var(--navy);background:rgba(30,58,95,.04);border-bottom-color:var(--teal)}
+
+/* Cards */
+.card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:14px}
+.section{max-width:800px;margin:0 auto;padding:16px}
+
+/* Form */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+@media(max-width:500px){.form-grid{grid-template-columns:1fr}}
+.form-group label{display:block;font-size:10px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:9px 10px;border:1px solid #d1d5db;border-radius:7px;font-size:14px;background:#fff;color:#1e293b}
+.form-group textarea{resize:vertical;font-size:13px}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(42,127,142,.12)}
+
+/* Sliders */
+.slider-row{margin-bottom:18px}
+.slider-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+.slider-label{font-size:13px;font-weight:600;color:var(--navy)}
+.slider-value{font-size:14px;font-weight:800;font-family:"SF Mono",Monaco,Consolas,monospace;min-width:20px;text-align:right}
+.slider-hints{display:flex;justify-content:space-between;margin-bottom:2px}
+.slider-hint{font-size:9.5px;color:var(--lightgray)}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--green),var(--orange),var(--red));outline:none;margin:6px 0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--navy);border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--navy);border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);cursor:pointer}
+.slider-pips{display:flex;justify-content:space-between;padding:0 1px}
+.slider-pip{font-size:9px;color:#cbd5e1;font-family:monospace;cursor:pointer;padding:2px 4px;user-select:none}
+.slider-pip.active{color:var(--navy);font-weight:700}
+
+/* Live Score */
+.live-score-bar{background:linear-gradient(135deg,var(--navy),#234b6e);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:16px;margin-bottom:16px;color:#fff}
+.live-score-num{font-size:36px;font-weight:800;font-family:"SF Mono",Monaco,Consolas,monospace;line-height:1}
+.live-score-tier{display:inline-block;padding:3px 12px;border-radius:14px;font-size:11px;font-weight:700;letter-spacing:.5px}
+.live-score-detail{font-size:10px;opacity:.6;margin-top:4px}
+
+/* Buttons */
+.btn{padding:10px 24px;border:none;border-radius:8px;font-size:14px;font-weight:600;transition:.2s}
+.btn-primary{background:var(--navy);color:#fff}.btn-primary:hover{background:#234b6e}
+.btn-primary:disabled{background:#94a3b8;cursor:default}
+.btn-secondary{background:var(--light);color:var(--navy)}.btn-secondary:hover{background:#dce8ed}
+.btn-danger{background:#fef2f2;color:var(--red)}.btn-danger:hover{background:#fee2e2}
+.btn-sm{padding:6px 14px;font-size:12px;border-radius:6px}
+.btn-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+
+/* Summary Cards */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+@media(max-width:600px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:#fff;border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);border-left:4px solid var(--navy)}
+.stat-card-label{font-size:10px;color:var(--lightgray);text-transform:uppercase;letter-spacing:.4px}
+.stat-card-value{font-size:26px;font-weight:800;font-family:"SF Mono",Monaco,Consolas,monospace;margin-top:2px}
+
+/* Table */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--radius);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
+thead{background:var(--navy);color:#fff}
+th{padding:10px 12px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #f1f5f9}
+tr:nth-child(even){background:#f8fafb}
+.tier-badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:.3px}
+.score-big{font-family:"SF Mono",Monaco,Consolas,monospace;font-weight:800;font-size:16px}
+
+/* Matrix */
+.matrix-container{position:relative;width:100%;padding-bottom:100%;background:#fafbfc;border-radius:8px;border:1px solid var(--border)}
+.matrix-inner{position:absolute;inset:0;overflow:hidden;border-radius:8px}
+.matrix-quadrant{position:absolute;font-size:10px;font-weight:600;opacity:.45;pointer-events:none}
+.matrix-danger{position:absolute;right:0;bottom:0;width:50%;height:50%;background:rgba(220,38,38,.04);border-bottom-right-radius:8px}
+.matrix-line-h{position:absolute;top:50%;left:0;right:0;border-top:1px dashed #d1d5db}
+.matrix-line-v{position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed #d1d5db}
+.matrix-dot{position:absolute;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;font-family:monospace;box-shadow:0 2px 6px rgba(0,0,0,.2);border:2px solid #fff;transform:translate(-50%,-50%);cursor:default;transition:transform .2s}
+.matrix-dot:hover{transform:translate(-50%,-50%) scale(1.2);z-index:99!important}
+.matrix-axis{position:absolute;font-size:10px;color:var(--gray);font-weight:600}
+
+/* Legend */
+.legend-item{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #f8fafc}
+.legend-dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700;font-family:monospace;flex-shrink:0}
+.legend-name{font-size:12px;font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.legend-sub{font-size:10px;color:var(--lightgray)}
+
+/* Empty state */
+.empty{text-align:center;padding:48px 20px}
+.empty-icon{font-size:40px;margin-bottom:10px}
+.empty-text{font-size:15px;color:var(--gray);margin-bottom:14px}
+
+/* Export banner */
+.export-bar{display:flex;gap:10px;justify-content:flex-end;margin-bottom:12px;flex-wrap:wrap}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:600;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.2);opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+
+/* Desktop layout for matrix */
+@media(min-width:768px){
+.matrix-layout{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}
+}
+
+/* Install prompt */
+.install-banner{background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #fde68a;border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.install-banner-text{font-size:12px;color:#92400e;font-weight:500}
+.install-banner .btn-sm{background:#92400e;color:#fff}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// ═══════════════════════════════════════
+// DATA & CONFIG
+// ═══════════════════════════════════════
+const STORAGE_KEY = 'rvf_employee_scores';
+const WEIGHTS = {roleCriticality:.25,performance:.15,institutionalKnowledge:.2,flightRisk:.2,replaceability:.15,developmentPotential:.05};
+const DIMENSIONS = [
+  {key:'roleCriticality',label:'Role Criticality',low:'Supportive',high:'Mission-Critical'},
+  {key:'performance',label:'Performance',low:'Below Expectations',high:'Exceptional'},
+  {key:'institutionalKnowledge',label:'Institutional Knowledge',low:'Minimal',high:'Irreplaceable'},
+  {key:'flightRisk',label:'Flight Risk',low:'Highly Engaged',high:'Imminent Departure'},
+  {key:'replaceability',label:'Replaceability',low:'Easy to Replace',high:'Extremely Difficult'},
+  {key:'developmentPotential',label:'Dev Potential',low:'At Ceiling',high:'High-Potential'},
+];
+const DEPARTMENTS = ['Warehouse','Transportation','Sales','Purchasing','Finance','HR','IT','Operations','Maintenance','Other'];
+
+function emptyScores(){return Object.fromEntries(DIMENSIONS.map(d=>[d.key,3]))}
+function calcScore(s){return Object.entries(WEIGHTS).reduce((sum,[k,w])=>sum+(s[k]||0)*w,0)}
+function round1(n){return Math.round(n*10)/10}
+
+function getTier(score){
+  if(score>=3.8)return{label:'CRITICAL',color:'#dc2626',bg:'#fef2f2',border:'#fca5a5'};
+  if(score>=2.8)return{label:'HIGH',color:'#d97706',bg:'#fffbeb',border:'#fcd34d'};
+  if(score>=1.8)return{label:'MODERATE',color:'#2563eb',bg:'#eff6ff',border:'#93c5fd'};
+  return{label:'LOW',color:'#16a34a',bg:'#f0fdf4',border:'#86efac'};
+}
+
+function getAction(emp){
+  const s=emp.scores,ps=emp.priorityScore;
+  if(s.flightRisk>=4&&s.roleCriticality>=4)return'URGENT: Retention plan + stay interview';
+  if(s.flightRisk>=4&&s.roleCriticality<4)return'Monitor: Flight risk, lower criticality';
+  if(s.roleCriticality>=4&&s.performance>=4&&s.developmentPotential>=4)return'Invest: High-potential \u2014 build IDP';
+  if(s.roleCriticality>=4&&s.performance<3)return'Develop: Critical role needs perf support';
+  if(ps>=3.5)return'Retain: Priority retention target';
+  if(ps>=2.5)return'Maintain: Standard development path';
+  return'Observe: Monitor and reassess';
+}
+
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let state = {
+  employees: JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'),
+  view: 'team',
+  editingIdx: null,
+  form: {name:'',department:'Warehouse',role:'',scores:emptyScores(),notes:''},
+};
+
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state.employees))}
+
+function enrichEmployees(){
+  return state.employees.map(e=>{
+    const ps=round1(calcScore(e.scores));
+    const tier=getTier(ps);
+    return{...e,priorityScore:ps,tier,action:getAction({...e,priorityScore:ps})};
+  }).sort((a,b)=>b.priorityScore-a.priorityScore);
+}
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+// ═══════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════
+function render(){
+  const enriched=enrichEmployees();
+  const count=enriched.length;
+  const liveScore=round1(calcScore(state.form.scores));
+  const liveTier=getTier(liveScore);
+
+  let html='';
+
+  // Header
+  html+=`<div class="header">
+    <div class="header-sub">River Valley Foods</div>
+    <h1>Employee Criticality &amp; Retention Scoring</h1>
+    <div class="header-meta">Staffing Structure Project &bull; ${count} employee${count!==1?'s':''} scored</div>
+  </div>`;
+
+  // Tabs
+  const tabs=[
+    {id:'form',label:state.editingIdx!==null?'Edit Employee':'+ Add Employee'},
+    {id:'team',label:`Team View (${count})`},
+    {id:'matrix',label:'Risk Matrix'},
+  ];
+  html+='<div class="tabs">';
+  tabs.forEach(t=>{html+=`<button class="tab ${state.view===t.id?'active':''}" onclick="setView('${t.id}')">${t.label}</button>`});
+  html+='</div>';
+
+  html+='<div class="section">';
+
+  // ──── FORM VIEW ────
+  if(state.view==='form'){
+    html+=`<div class="card"><div class="card-title">${state.editingIdx!==null?'Edit Employee':'Score an Employee'}</div>`;
+    html+=`<div class="form-grid">
+      <div class="form-group"><label>Employee Name</label><input id="fname" value="${esc(state.form.name)}" oninput="updateForm('name',this.value)" placeholder="Full name"></div>
+      <div class="form-group"><label>Department</label><select id="fdept" onchange="updateForm('department',this.value)">${DEPARTMENTS.map(d=>`<option ${state.form.department===d?'selected':''}>${d}</option>`).join('')}</select></div>
+      <div class="form-group"><label>Current Role</label><input value="${esc(state.form.role)}" oninput="updateForm('role',this.value)" placeholder="Job title"></div>
+    </div>`;
+
+    // Sliders
+    DIMENSIONS.forEach(dim=>{
+      const val=state.form.scores[dim.key];
+      const col=val>=4?'var(--red)':val>=3?'var(--orange)':'var(--green)';
+      html+=`<div class="slider-row">
+        <div class="slider-header"><span class="slider-label">${dim.label}</span><span class="slider-value" style="color:${col}">${val}</span></div>
+        <div class="slider-hints"><span class="slider-hint">${dim.low}</span><span class="slider-hint">${dim.high}</span></div>
+        <input type="range" min="1" max="5" step="1" value="${val}" oninput="updateScore('${dim.key}',+this.value)">
+        <div class="slider-pips">${[1,2,3,4,5].map(n=>`<span class="slider-pip ${n===val?'active':''}" onclick="updateScore('${dim.key}',${n})">${n}</span>`).join('')}</div>
+      </div>`;
+    });
+
+    html+=`<div class="form-group" style="margin-top:4px"><label>Manager Notes</label><textarea rows="2" oninput="updateForm('notes',this.value)" placeholder="Context, concerns, observations...">${esc(state.form.notes)}</textarea></div>`;
+
+    // Live score bar
+    html+=`<div class="live-score-bar">
+      <div class="live-score-num" style="color:${liveTier.border}">${liveScore.toFixed(1)}</div>
+      <div><span class="live-score-tier" style="background:${liveTier.bg};color:${liveTier.color};border:1px solid ${liveTier.border}">${liveTier.label}</span>
+      <div class="live-score-detail">Score updates as you adjust sliders</div></div>
+    </div>`;
+
+    html+=`<div class="btn-row">
+      <button class="btn btn-primary" onclick="handleSave()" ${state.form.name.trim()?'':'disabled'}>${state.editingIdx!==null?'Update Employee':'Save Employee'}</button>`;
+    if(state.editingIdx!==null) html+=`<button class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>`;
+    html+=`</div></div>`;
+  }
+
+  // ──── TEAM VIEW ────
+  if(state.view==='team'){
+    if(count===0){
+      html+=`<div class="card empty"><div class="empty-icon">&#128203;</div><div class="empty-text">No employees scored yet</div>
+        <button class="btn btn-primary" onclick="setView('form')">Add First Employee</button></div>`;
+    } else {
+      // Export bar
+      html+=`<div class="export-bar">
+        <button class="btn btn-secondary btn-sm" onclick="exportCSV()">&#128190; Export CSV</button>
+        <button class="btn btn-primary btn-sm" onclick="setView('form')">+ Add Employee</button>
+      </div>`;
+
+      // Stats
+      const critical=enriched.filter(e=>e.tier.label==='CRITICAL').length;
+      const high=enriched.filter(e=>e.tier.label==='HIGH').length;
+      const avg=(enriched.reduce((s,e)=>s+e.priorityScore,0)/count).toFixed(1);
+      html+=`<div class="stat-grid">
+        <div class="stat-card"><div class="stat-card-label">Total Scored</div><div class="stat-card-value" style="color:var(--navy)">${count}</div></div>
+        <div class="stat-card" style="border-color:var(--red)"><div class="stat-card-label">Critical Tier</div><div class="stat-card-value" style="color:var(--red)">${critical}</div></div>
+        <div class="stat-card" style="border-color:var(--orange)"><div class="stat-card-label">High Tier</div><div class="stat-card-value" style="color:var(--orange)">${high}</div></div>
+        <div class="stat-card" style="border-color:var(--teal)"><div class="stat-card-label">Avg Score</div><div class="stat-card-value" style="color:var(--teal)">${avg}</div></div>
+      </div>`;
+
+      // Table
+      html+=`<div class="table-wrap"><table><thead><tr>
+        <th>#</th><th>Employee</th><th>Dept</th><th>Role</th><th>Score</th><th>Tier</th><th>Recommended Action</th><th></th>
+      </tr></thead><tbody>`;
+      enriched.forEach((emp,idx)=>{
+        html+=`<tr>
+          <td style="font-weight:700;color:var(--lightgray);font-family:monospace">${idx+1}</td>
+          <td style="font-weight:600;color:var(--navy)">${esc(emp.name)}</td>
+          <td>${esc(emp.department)}</td>
+          <td>${esc(emp.role)}</td>
+          <td><span class="score-big" style="color:${emp.tier.color}">${emp.priorityScore}</span></td>
+          <td><span class="tier-badge" style="background:${emp.tier.bg};color:${emp.tier.color};border:1px solid ${emp.tier.border}">${emp.tier.label}</span></td>
+          <td style="font-size:12px;color:#475569;max-width:220px">${emp.action}</td>
+          <td style="white-space:nowrap">
+            <button class="btn btn-sm btn-secondary" onclick="handleEdit(${idx})" style="margin-right:4px">Edit</button>
+            <button class="btn btn-sm btn-danger" onclick="handleDelete(${idx})">Remove</button>
+          </td>
+        </tr>`;
+      });
+      html+=`</tbody></table></div>`;
+    }
+  }
+
+  // ──── MATRIX VIEW ────
+  if(state.view==='matrix'){
+    if(count===0){
+      html+=`<div class="card empty"><div class="empty-text">Add employees to see the risk matrix</div>
+        <button class="btn btn-primary" onclick="setView('form')">Add First Employee</button></div>`;
+    } else {
+      html+=`<div class="matrix-layout">`;
+
+      // Matrix
+      html+=`<div class="card"><div class="card-title">Criticality vs Flight Risk</div>
+        <p style="font-size:12px;color:var(--lightgray);margin:-8px 0 16px">Top-right = immediate attention needed</p>
+        <div class="matrix-container"><div class="matrix-inner">
+          <div class="matrix-danger"></div>
+          <div class="matrix-line-h"></div><div class="matrix-line-v"></div>
+          <div class="matrix-quadrant" style="top:8%;left:8%">Low Risk / Low Crit</div>
+          <div class="matrix-quadrant" style="top:8%;right:6%;text-align:right">High Risk / Low Crit</div>
+          <div class="matrix-quadrant" style="bottom:8%;left:8%">Low Risk / High Crit</div>
+          <div class="matrix-quadrant" style="bottom:8%;right:6%;text-align:right;color:var(--red);opacity:.7">URGENT</div>
+          <div class="matrix-axis" style="bottom:-20px;left:50%;transform:translateX(-50%)">Flight Risk &#8594;</div>
+          <div class="matrix-axis" style="left:-22px;top:50%;transform:rotate(-90deg) translateX(-50%);transform-origin:left center;white-space:nowrap">Role Criticality &#8594;</div>`;
+
+      enriched.forEach((emp,idx)=>{
+        const x=((emp.scores.flightRisk-1)/4)*80+10;
+        const y=90-(((emp.scores.roleCriticality-1)/4)*80+10);
+        html+=`<div class="matrix-dot" style="left:${x}%;top:${y}%;background:${emp.tier.color};z-index:${count-idx}" title="${esc(emp.name)}: ${emp.priorityScore}">${emp.priorityScore}</div>`;
+      });
+
+      html+=`</div></div></div>`;
+
+      // Legend sidebar
+      html+=`<div>`;
+      html+=`<div class="card"><div class="card-title">Employee Key</div>`;
+      enriched.forEach(emp=>{
+        html+=`<div class="legend-item">
+          <div class="legend-dot" style="background:${emp.tier.color}">${emp.priorityScore}</div>
+          <div style="min-width:0"><div class="legend-name">${esc(emp.name)}</div><div class="legend-sub">${esc(emp.department)} | ${esc(emp.role)}</div></div>
+        </div>`;
+      });
+      html+=`</div>`;
+
+      // Dept snapshot
+      const deptMap={};
+      enriched.forEach(e=>{
+        if(!deptMap[e.department])deptMap[e.department]={count:0,critical:0};
+        deptMap[e.department].count++;
+        if(e.tier.label==='CRITICAL')deptMap[e.department].critical++;
+      });
+      html+=`<div class="card" style="margin-top:12px"><div class="card-title">Department Snapshot</div>`;
+      Object.entries(deptMap).forEach(([dept,s])=>{
+        html+=`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f8fafc">
+          <span style="font-size:12px;color:#475569">${dept}</span>
+          <span style="font-size:11px;color:var(--lightgray)">${s.count} scored${s.critical?` | ${s.critical} critical`:''}</span></div>`;
+      });
+      html+=`</div></div>`;
+
+      html+=`</div>`; // close matrix-layout
+    }
+  }
+
+  html+='</div>'; // close section
+  document.getElementById('app').innerHTML=html;
+
+  // Auto-focus name field on form view
+  if(state.view==='form'){const el=document.getElementById('fname');if(el&&!state.form.name)el.focus();}
+}
+
+// ═══════════════════════════════════════
+// ACTIONS
+// ═══════════════════════════════════════
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function setView(v){state.view=v;render()}
+
+function updateForm(key,val){state.form[key]=val;render()}
+function updateScore(key,val){state.form.scores[key]=val;render()}
+
+function handleSave(){
+  if(!state.form.name.trim())return;
+  const entry={name:state.form.name.trim(),department:state.form.department,role:state.form.role.trim(),scores:{...state.form.scores},notes:state.form.notes,updatedAt:new Date().toISOString()};
+  if(state.editingIdx!==null){
+    state.employees[state.editingIdx]=entry;
+    state.editingIdx=null;
+    toast('Employee updated');
+  } else {
+    state.employees.push(entry);
+    toast('Employee saved');
+  }
+  save();
+  state.form={name:'',department:'Warehouse',role:'',scores:emptyScores(),notes:''};
+  state.view='team';
+  render();
+}
+
+function cancelEdit(){
+  state.editingIdx=null;
+  state.form={name:'',department:'Warehouse',role:'',scores:emptyScores(),notes:''};
+  render();
+}
+
+function handleEdit(sortedIdx){
+  const enriched=enrichEmployees();
+  const target=enriched[sortedIdx];
+  const realIdx=state.employees.findIndex(e=>e.name===target.name&&e.department===target.department&&e.role===target.role);
+  if(realIdx===-1)return;
+  state.form={...state.employees[realIdx],scores:{...state.employees[realIdx].scores}};
+  state.editingIdx=realIdx;
+  state.view='form';
+  render();
+}
+
+function handleDelete(sortedIdx){
+  const enriched=enrichEmployees();
+  const target=enriched[sortedIdx];
+  if(!confirm(`Remove ${target.name}?`))return;
+  const realIdx=state.employees.findIndex(e=>e.name===target.name&&e.department===target.department&&e.role===target.role);
+  if(realIdx===-1)return;
+  state.employees.splice(realIdx,1);
+  save();
+  toast('Employee removed');
+  render();
+}
+
+function exportCSV(){
+  const enriched=enrichEmployees();
+  if(!enriched.length)return;
+  const headers=['Name','Department','Role','Role Criticality','Performance','Institutional Knowledge','Flight Risk','Replaceability','Dev Potential','Priority Score','Risk Tier','Recommended Action','Notes'];
+  const rows=enriched.map(e=>[
+    e.name,e.department,e.role,e.scores.roleCriticality,e.scores.performance,e.scores.institutionalKnowledge,
+    e.scores.flightRisk,e.scores.replaceability,e.scores.developmentPotential,e.priorityScore,e.tier.label,e.action,e.notes||''
+  ]);
+  let csv=headers.join(',')+'\n';
+  rows.forEach(r=>{csv+=r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')+'\n'});
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`RVF_Employee_Scores_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  toast('CSV exported');
+}
+
+// ═══════════════════════════════════════
+// PWA: SERVICE WORKER REGISTRATION
+// ═══════════════════════════════════════
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('scoring-sw.js').catch(()=>{});
+}
+
+// Install prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredPrompt=e;
+  // Could show an install banner here
+});
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+if(state.employees.length===0)state.view='form';
+render();
+</script>
+</body>
+</html>
